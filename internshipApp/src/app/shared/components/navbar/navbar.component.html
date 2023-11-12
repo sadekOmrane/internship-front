@@ -1,0 +1,32 @@
+<nav class="navbar">
+  <mat-toolbar class="d-flex justify-content-between align-items-center">
+    <span>
+      <button mat-icon-button class="btn" (click)="toggleSidebar(true)" aria-label="Example icon-button with menu icon">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <a [routerLink]="['/']" class="logo mx-2" routerLinkActive="router-link-active">Internship</a>
+    </span>
+    <span>
+      <button *ngIf="!this.me" class="btn btn-primary" (click)="openRegisterModal()">
+        Register
+      </button>
+      <button *ngIf="!this.me" (click)="openLoginModal()" class="btn btn-primary ms-2">
+        Login
+      </button>
+      <button *ngIf="this.me" class="btn" mat-button [matMenuTriggerFor]="menu">
+        <mat-icon class="mx-2">person_outline</mat-icon>
+        {{this.me.username}}
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>settings</mat-icon>
+          <span>Settings</span>
+        </button>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>subdirectory_arrow_left</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    </span>
+  </mat-toolbar>
+</nav>

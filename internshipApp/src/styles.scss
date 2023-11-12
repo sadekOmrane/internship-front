@@ -1,0 +1,26 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+.mat-drawer-container{
+  min-height: 92vh;
+}
+.btn{
+  padding: 5px !important;
+  display: inline-flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.btn-primary{
+  background-color: #3f51b5 !important;
+  border: 1px solid #3a4bac !important;
+  padding: 4px 20px !important;
+  border-radius: 18px;
+}
+a{
+  color: #3f51b5;
+}

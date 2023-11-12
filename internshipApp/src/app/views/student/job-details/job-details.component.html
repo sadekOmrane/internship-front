@@ -1,0 +1,5 @@
+<h3>{{this.job?.title}}</h3>
+<p>{{this.job?.description}}</p>
+<div *ngIf="!this.job">
+  <h4>Not Found</h4>
+</div>
