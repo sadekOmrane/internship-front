@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../providers/security/auth.service';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-login',
@@ -11,11 +11,16 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   hide = true;
   messageError : string;
+  showWarning : boolean = false;
   constructor(private fb: FormBuilder,
     private authService: AuthService,
-    public dialogRef: MatDialogRef<LoginComponent>) { }
+    public dialogRef: MatDialogRef<LoginComponent>,
+    @Inject(MAT_DIALOG_DATA) public data ) { }
 
   ngOnInit() {
+    if(this.data){
+      this.showWarning = true;
+    }
     this.formBuilder();
   }
 

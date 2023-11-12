@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Job } from 'src/app/shared/models/job';
+import { User } from 'src/app/shared/models/user';
 import { JobService } from 'src/app/shared/providers/entities/job.service';
 import { ModalService } from 'src/app/shared/providers/modal.service';
+import { AuthService } from 'src/app/shared/providers/security/auth.service';
 
 @Component({
   selector: 'app-jobs',
   templateUrl: './jobs.component.html',
 })
 export class JobsComponent implements OnInit {
+  me: User;
   jobs: Job[] = [];
   params = {
     count: null,
@@ -16,9 +19,14 @@ export class JobsComponent implements OnInit {
     page: null,
   }
   constructor(private jobService : JobService,
-    private modalService: ModalService) { }
+    private modalService: ModalService,
+    private authService : AuthService) { }
 
   ngOnInit() {
+    this.me = this.authService.getMeFromCash();
+    this.authService.getUserSubjet().subscribe((res:any)=>{
+      this.me = res;
+    });
     this.getJobs();
   }
   getJobs(){
@@ -33,19 +41,29 @@ export class JobsComponent implements OnInit {
   }
 
   openJobModal(job?:Job){
-    let dialogRef = this.modalService.openJobModal(job);
-    dialogRef.afterClosed().subscribe(res=>{
-      this.getJobs();
-    });
+    if(this.me){
+      let dialogRef = this.modalService.openJobModal(job);
+      dialogRef.afterClosed().subscribe(res=>{
+        this.getJobs();
+      });
+    }else{
+      this.modalService.openLoginModal(true);
+    }
+
   }
 
 
   deleteJob(id:number){
-    this.jobService.delete(id).subscribe(res=>{
+    if(this.me){
+      this.jobService.delete(id).subscribe(res=>{
       this.getJobs();
     }, err=>{
       console.log(err);
     })
+    }
+    else{
+      this.modalService.openLoginModal(true);
+    }
   }
 
   handlePageEvent($event){

@@ -21,8 +21,10 @@ export class ModalService {
   }
 
 
-  openLoginModal() {
-    const dialogRef = this.dialog.open(LoginComponent);
+  openLoginModal(showMsg=false) {
+    const dialogRef = this.dialog.open(LoginComponent, {
+      data: showMsg
+    });
     return dialogRef;
   }
 

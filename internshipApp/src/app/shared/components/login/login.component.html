@@ -17,6 +17,9 @@
     <div class="alert alert-danger col-12" role="alert" *ngIf="messageError">
       {{messageError}}
     </div>
+    <div class="alert alert-warning col-12" role="alert" *ngIf="showWarning">
+      Login is required!
+    </div>
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
